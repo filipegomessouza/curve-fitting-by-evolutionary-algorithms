@@ -1,9 +1,9 @@
+from typing import Tuple
 from src.algorithms.algorithm import Algorithm
 from sko.PSO import PSO
 import numpy as np
 
 class PsoAlgorithm(Algorithm):
-    RUNS = 10
     POPULATION_SIZE = 100
     MAX_ITERATIONS = 1000
     LOWER_BOUND = -5
@@ -15,21 +15,7 @@ class PsoAlgorithm(Algorithm):
     def name(self) -> str:
         return 'Particle Swarm Optimization'
 
-    def run(self):
-        self.individuals = []
-        self.fitness_values = []
-
-        for _ in range(self.RUNS):
-            gbest_x, gbest_y = self.run_pso()
-
-            self.individuals.append(gbest_x)
-            self.fitness_values.append(gbest_y)
-
-        best_idx = np.argmin(self.fitness_values)
-        self.best_individual = self.individuals[best_idx]
-        self.best_fitness = self.fitness_values[best_idx]
-
-    def run_pso(self):
+    def run(self) -> Tuple[np.ndarray, float]:
         pso = PSO(
             func = self.fitness,
             n_dim = 3,

@@ -29,5 +29,6 @@ class PsoAlgorithm(Algorithm):
         )
 
         pso.run()
+        self.fitness_values_history.append([fitness[0] for fitness in pso.gbest_y_hist])
 
         return pso.gbest_x, pso.gbest_y[0]

@@ -3,6 +3,7 @@ from typing import Dict, List,Optional, Tuple
 from src.dataset import Dataset
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
 class Algorithm(ABC):
     def __init__(self, dataset: Dataset):
@@ -10,6 +11,7 @@ class Algorithm(ABC):
 
         self.individuals: List[np.ndarray] = []
         self.fitness_values: List[float] = []
+        self.fitness_values_history: List[List[float]] = []
 
         self.best_individual: Optional[np.ndarray] = None
         self.best_fitness: float = float('inf')
@@ -17,6 +19,7 @@ class Algorithm(ABC):
     def run_many_times(self, times: int):
         self.individuals = []
         self.fitness_values = []
+        self.fitness_values_history = []
 
         for _ in range(times):
             gbest_x, gbest_y = self.run()
@@ -36,6 +39,10 @@ class Algorithm(ABC):
     def name(self) -> str:
         pass
 
+    @abstractmethod
+    def plot_best_fitness_graphic(self) -> None:
+        pass
+
     def fitness(self, individual: np.ndarray) -> float:
         a: float = individual[0]
         b: float = individual[1]
@@ -48,7 +55,7 @@ class Algorithm(ABC):
 
         return ((y - y_pred) ** 2).sum()
 
-    def plot_curve_graphic(self):
+    def plot_curve_graphic(self) -> None:
         a: float = self.best_individual[0]
         b: float = self.best_individual[1]
         c: float = self.best_individual[2]
@@ -66,6 +73,20 @@ class Algorithm(ABC):
         plt.grid(True, alpha = 0.3)
         plt.tight_layout()
         plt.savefig(f'graphics/curve_fit_{self.name().replace(" ", "_").lower()}.png', format='png')
+
+    def plot_best_fitness_graphic(self) -> None:
+        plt.figure(figsize = (10, 6))
+
+        for idx, history in enumerate(self.fitness_values_history):
+            cummin_history = np.minimum.accumulate(history)
+            plt.plot(cummin_history, label = f'Run {idx + 1}', alpha = 0.7, linewidth = 1.5)
+
+        plt.xlabel('Iteration')
+        plt.ylabel('Best Fitness')
+        plt.title(f'Best Fitness Evolution - {self.name()}')
+        plt.legend()
+        plt.grid(True, alpha = 0.3)
+        plt.savefig(f'graphics/fitness_history_{self.name().replace(" ", "_").lower()}.png', format='png')
 
     def get_dataframe_row(self) -> Dict[str, float]:
         return {

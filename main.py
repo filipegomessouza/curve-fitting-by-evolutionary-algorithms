@@ -24,7 +24,9 @@ dataframe = pd.DataFrame(columns = [
 
 for algorithm in algorithms:
     algorithm.run_many_times(RUN_TIMES)
+
     algorithm.plot_curve_graphic()
+    algorithm.plot_best_fitness_graphic()
 
     dataframe_row = algorithm.get_dataframe_row()
     dataframe_rows.append(dataframe_row)

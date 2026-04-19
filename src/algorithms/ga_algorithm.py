@@ -2,6 +2,8 @@ from typing import Tuple
 from src.algorithms.algorithm import Algorithm
 from sko.GA import GA
 import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
 
 class GaAlgorithm(Algorithm):
     POPULATION_SIZE = 100
@@ -27,5 +29,8 @@ class GaAlgorithm(Algorithm):
         )
 
         ga.run()
+
+        fitness_history = pd.DataFrame(ga.all_history_Y).min(axis=1).tolist()
+        self.fitness_values_history.append(fitness_history)
 
         return ga.best_x, ga.best_y

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Dict, List,Optional
+from typing import Dict, List,Optional, Tuple
 from src.dataset import Dataset
 import matplotlib.pyplot as plt
 import numpy as np
@@ -14,8 +14,22 @@ class Algorithm(ABC):
         self.best_individual: Optional[np.ndarray] = None
         self.best_fitness: float = float('inf')
 
+    def run_many_times(self, times: int):
+        self.individuals = []
+        self.fitness_values = []
+
+        for _ in range(times):
+            gbest_x, gbest_y = self.run()
+
+            self.individuals.append(gbest_x)
+            self.fitness_values.append(gbest_y)
+
+        best_idx = np.argmin(self.fitness_values)
+        self.best_individual = self.individuals[best_idx]
+        self.best_fitness = self.fitness_values[best_idx]
+
     @abstractmethod
-    def run(self):
+    def run(self) -> Tuple[np.ndarray, float]:
         pass
 
     @abstractmethod

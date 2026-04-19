@@ -1,10 +1,11 @@
 from typing import List
+import numpy as np
 
 class Dataset:
     def __init__(self, x_data: List[float], y_data: List[float]):
         self.__validate_data(x_data, y_data)
-        self.x_data = x_data
-        self.y_data = y_data
+        self.x_data = np.array(x_data)
+        self.y_data = np.array(y_data)
 
     def __validate_data(self, x_data: List[float], y_data: List[float]):
         if len(x_data) != len(y_data):
@@ -34,8 +35,16 @@ class Dataset:
     def __getitem__(self, idx: int):
         return self.x_data[idx], self.y_data[idx]
 
-    def x(self, idx: int):
+    def x_i(self, idx: int):
         return self.x_data[idx]
 
-    def y(self, idx: int):
+    def y_i(self, idx: int):
         return self.y_data[idx]
+
+    @property
+    def x(self) -> np.ndarray:
+        return self.x_data
+
+    @property
+    def y(self) -> np.ndarray:
+        return self.y_data

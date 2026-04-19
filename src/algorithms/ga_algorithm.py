@@ -31,6 +31,6 @@ class GaAlgorithm(Algorithm):
         ga.run()
 
         fitness_history = pd.DataFrame(ga.all_history_Y).min(axis=1).tolist()
-        self.fitness_values_history.append(fitness_history)
+        self.best_fitness_values_history.append(fitness_history)
 
         return ga.best_x, ga.best_y

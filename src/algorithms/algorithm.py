@@ -11,7 +11,7 @@ class Algorithm(ABC):
 
         self.individuals: List[np.ndarray] = []
         self.fitness_values: List[float] = []
-        self.fitness_values_history: List[List[float]] = []
+        self.best_fitness_values_history: List[List[float]] = []
 
         self.best_individual: Optional[np.ndarray] = None
         self.best_fitness: float = float('inf')
@@ -19,7 +19,7 @@ class Algorithm(ABC):
     def run_many_times(self, times: int):
         self.individuals = []
         self.fitness_values = []
-        self.fitness_values_history = []
+        self.best_fitness_values_history = []
 
         for _ in range(times):
             gbest_x, gbest_y = self.run()
@@ -77,7 +77,7 @@ class Algorithm(ABC):
     def plot_best_fitness_graphic(self) -> None:
         plt.figure(figsize = (10, 6))
 
-        for idx, history in enumerate(self.fitness_values_history):
+        for idx, history in enumerate(self.best_fitness_values_history):
             cummin_history = np.minimum.accumulate(history)
             plt.plot(cummin_history, label = f'Run {idx + 1}', alpha = 0.7, linewidth = 1.5)
 

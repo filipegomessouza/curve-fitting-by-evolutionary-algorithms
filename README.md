@@ -1,6 +1,6 @@
 # Ajuste de Curvas por Algoritmos Evolutivos
 
-Aplicação de dois algoritmos bio-inspirados — **Particle Swarm Optimization (PSO)** e **Algoritmo Genético (GA)** — ao problema de ajuste de curvas (*curve fitting*).
+Aplicação de dois algoritmos evolutivos, **Particle Swarm Optimization (PSO)** e **Algoritmo Genético (GA)**, ao problema de ajuste de curvas (*curve fitting*).
 
 ## O Problema
 

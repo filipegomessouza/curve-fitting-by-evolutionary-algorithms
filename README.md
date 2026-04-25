@@ -103,8 +103,6 @@ Cada algoritmo foi executado **10 vezes de forma independente**. Os gráficos ab
 
 ### Tabela Comparativa
 
-> Para gerar: adicione `print(dataframe.to_markdown(index=False))` ao final da execução e substitua os valores abaixo.
-
 | Algoritmo | Fitness Médio (10 exec.) | Melhor Fitness |
 |---|---|---|
 | Particle Swarm Optimization | 8.315238e-08 | 8.315238e-08 |
